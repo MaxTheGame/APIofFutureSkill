@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "1dd43717-1e7c-49b0-ba5b-bc2040be7e3f",
+		"name": "FutureSkillTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31989581"
+	},
+	"item": [
+		{
+			"name": "Create a Gets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-type is present\",function () {\r",
+							"    pm.response.to.have.header(\"Content-type\",\"application/json; charset=utf-8\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response body is success\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"qui\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 404]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 80ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(80);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-type is present\",function () {\r",
+							"    pm.response.to.have.header(\"Content-type\",\"application/json; charset=utf-8\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"foo\",\r\n\"body\": \"bar\",\r\n\"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title).to.eql(\"Futureskill\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-type is present\",function () {\r",
+							"    pm.response.to.have.header(\"Content-type\",\"application/json; charset=utf-8\")\r",
+							"})\r",
+							"\r",
+							"let response = pm.response.json()\r",
+							"pm.environment.set(\"id\", \"1\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"Futureskill\",\r\n\"body\": \"bar\",\r\n\"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response body is {}\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql({});\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
